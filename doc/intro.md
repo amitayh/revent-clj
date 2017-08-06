@@ -1,3 +1,3 @@
-# Introduction to clojure-es
+# Introduction to revent-clj
 
 TODO: write [great documentation](http://jacobian.org/writing/what-to-write/)

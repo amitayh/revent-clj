@@ -1,4 +1,4 @@
-(ns clojure-es.version)
+(ns revent-clj.version)
 
 (defn validate [expected actual]
   (or (nil? expected)

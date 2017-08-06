@@ -1,6 +1,6 @@
-(ns clojure-es.repository
-  (:require [clojure-es.either :refer :all]
-            [clojure-es.version :as version]))
+(ns revent-clj.repository
+  (:require [revent-clj.either :refer :all]
+            [revent-clj.version :as version]))
 
 (defn- create-snapshot-reducer [reducer]
   {:init   {:aggregate (:init reducer) :version 0}

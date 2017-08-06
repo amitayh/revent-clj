@@ -1,6 +1,6 @@
-(ns clojure-es.memory-event-store
-  (:require [clojure-es.either :refer :all]
-            [clojure-es.version :as version]))
+(ns revent-clj.memory-event-store
+  (:require [revent-clj.either :refer :all]
+            [revent-clj.version :as version]))
 
 (defn- to-event-stream [payloads last-version timestamp]
   (let [next-version (inc last-version)

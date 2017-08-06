@@ -1,4 +1,4 @@
-(ns clojure-es.either)
+(ns revent-clj.either)
 
 (defn success [value] [value nil])
 

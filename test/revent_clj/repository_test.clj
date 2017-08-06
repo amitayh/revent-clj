@@ -1,9 +1,9 @@
-(ns clojure-es.repository-test
+(ns revent-clj.repository-test
   (:require [clojure.test :refer :all]
-            [clojure-es.repository :as r]
-            [clojure-es.memory-event-store :as s]
-            [clojure-es.banking-domain :as d]
-            [clojure-es.either :refer :all]))
+            [revent-clj.repository :as r]
+            [revent-clj.memory-event-store :as s]
+            [revent-clj.banking-domain :as d]
+            [revent-clj.either :refer :all]))
 
 (def aggregate-id 1)
 

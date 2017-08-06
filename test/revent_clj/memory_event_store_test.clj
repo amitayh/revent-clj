@@ -1,7 +1,7 @@
-(ns clojure-es.memory-event-store-test
+(ns revent-clj.memory-event-store-test
   (:require [clojure.test :refer :all]
-            [clojure-es.either :refer :all]
-            [clojure-es.memory-event-store :as s]))
+            [revent-clj.either :refer :all]
+            [revent-clj.memory-event-store :as s]))
 
 (def stream-id 1)
 

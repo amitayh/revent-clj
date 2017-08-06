@@ -1,5 +1,5 @@
-(ns clojure-es.cqrs
-  (:require [clojure-es.either :refer :all]))
+(ns revent-clj.cqrs
+  (:require [revent-clj.either :refer :all]))
 
 (defn command
   ([aggregate-id to-events]

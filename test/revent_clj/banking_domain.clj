@@ -1,5 +1,5 @@
-(ns clojure-es.banking-domain
-  (:require [clojure-es.either :refer :all]))
+(ns revent-clj.banking-domain
+  (:require [revent-clj.either :refer :all]))
 
 ; --- Example domain for tests ---
 
