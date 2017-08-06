@@ -4,18 +4,20 @@
             [clojure-es.memory-event-store :as s]))
 
 (def stream-id 1)
+
 (def ^:dynamic persist-events)
+
 (def ^:dynamic read-events)
 
 (defn is-success [[value error]]
   (nil? error))
 
-(defn setup-store [f]
+(defn setup-store [test]
   (let [store (s/empty-store)
         now (constantly :now)]
     (binding [persist-events (partial s/persist-events store now)
               read-events (partial s/read-events store)]
-      (f))))
+      (test))))
 
 (use-fixtures :each setup-store)
 

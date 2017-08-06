@@ -17,6 +17,8 @@
     (success snapshot)
     (failure :invalid-aggregate-version)))
 
+; --- Public ---
+
 (defn load-snapshot
   ([read-events reducer aggregate-id]
    (load-snapshot read-events reducer aggregate-id nil))

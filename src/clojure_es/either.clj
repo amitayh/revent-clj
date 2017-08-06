@@ -10,6 +10,7 @@
 (defn bind [[value error :as either] f]
   (if (nil? error) (f value) either))
 
+; TODO rename
 (defmacro let-err [bindings body]
   (if (= (count bindings) 2)
     `(fmap

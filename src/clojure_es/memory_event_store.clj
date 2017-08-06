@@ -23,8 +23,9 @@
 
 ; --- Public ---
 
-(defn empty-store []
-  (atom {}))
+(defn now [] (java.time.Instant/now))
+
+(defn empty-store [] (atom {}))
 
 (defn persist-events
   ([store now stream-id events]

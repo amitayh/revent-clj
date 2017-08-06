@@ -2,7 +2,7 @@
   (:require [clojure.test :refer :all]
             [clojure-es.repository :as r]
             [clojure-es.memory-event-store :as s]
-            [clojure-es.domain :as d]
+            [clojure-es.banking-domain :as d]
             [clojure-es.either :refer :all]))
 
 (def aggregate-id 1)
@@ -11,13 +11,13 @@
 
 (def ^:dynamic persist-events)
 
-(defn setup-repository [f]
+(defn setup-repository [test]
   (let [store (s/empty-store)
         read-events (partial s/read-events store)
         now (constantly :now)]
     (binding [persist-events (partial s/persist-events store now)
               load-snapshot (partial r/load-snapshot read-events d/reducer)]
-      (f))))
+      (test))))
 
 (use-fixtures :each setup-repository)
 
