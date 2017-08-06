@@ -1,6 +1,6 @@
-# revent-clj
+# revent-clj [![Build Status](https://travis-ci.org/amitayh/revent-clj.svg?branch=master)](https://travis-ci.org/amitayh/revent-clj)
 
-A minimal Clojure library for event sourcing
+Tiny event sourcing library for Clojure
 
 ## Usage
 
