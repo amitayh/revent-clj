@@ -27,17 +27,17 @@
   (testing "bind should apply function to successful result"
     (is (= (success 6) (bind succeeded (comp success inc))))))
 
-(deftest let-err-macro
+(deftest chain-macro
   (testing "chain successful results"
     (is (= (success 4)
-           (let-err
+           (chain
              [foo (success 1)
               bar (success (+ foo 2))]
              (+ foo bar)))))
 
   (testing "fail fast in case of failure"
     (is (= failed)
-        (let-err
+        (chain
           [foo failed
            bar (success (+ foo 2))]
           (+ foo bar)))))

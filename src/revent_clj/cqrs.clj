@@ -11,7 +11,7 @@
     :expected-version expected-version}))
 
 (defn handle [load-snapshot persist-events command]
-  (let-err
+  (chain
     [snapshot (load-snapshot (:aggregate-id command) (:expected-version command))
      command-events ((:to-events command) (:aggregate snapshot))
      persisted-events (persist-events (:aggregate-id command) command-events (:version snapshot))]
