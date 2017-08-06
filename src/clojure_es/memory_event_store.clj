@@ -27,6 +27,8 @@
 
 (defn empty-store [] (atom {}))
 
+; This implementation doesn't support appending
+; events to multiple streams concurrently
 (defn persist-events
   ([store now stream-id events]
    (persist-events store now stream-id events nil))

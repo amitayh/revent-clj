@@ -32,37 +32,41 @@
         read-events (partial s/read-events store)
         persist-events (partial s/persist-events store s/now)]
     (binding [load-snapshot (partial r/load-snapshot read-events d/reducer)
-              handle (fn [command] (cqrs/handle load-snapshot persist-events command))]
+              handle (fn [command expected-version]
+                       (cqrs/handle
+                         load-snapshot
+                         persist-events
+                         (cqrs/command account-id command expected-version)))]
       (test))))
 
 (use-fixtures :each setup-handler)
 
-(deftest command-handling-without-events
-  (handle (cqrs/command account-id create-command))
+(deftest handle-command-for-new-aggregate
+  (handle create-command nil)
   (is (= {:owner "John Doe" :balance 10}
          (load-account))))
 
 (deftest handle-multiple-commands
-  (handle (cqrs/command account-id create-command))
-  (handle (cqrs/command account-id deposit-command))
+  (handle create-command nil)
+  (handle deposit-command nil)
   (is (= {:owner "John Doe" :balance 20}
          (load-account))))
 
 (deftest fail-if-expected-version-is-wrong
-  (let [result (handle (cqrs/command account-id create-command))
+  (let [result (handle create-command nil)
         version (last-version result)
         wrong-expected-version (dec version)]
-    (is (= (handle (cqrs/command account-id deposit-command wrong-expected-version))
+    (is (= (handle deposit-command wrong-expected-version)
            (failure :invalid-aggregate-version)))))
 
 (deftest succeed-if-expected-version-is-correct
-  (let [result (handle (cqrs/command account-id create-command))
+  (let [result (handle create-command nil)
         version (last-version result)]
-    (handle (cqrs/command account-id deposit-command version))
+    (handle deposit-command version)
     (is (= {:owner "John Doe" :balance 20}
            (load-account)))))
 
 (deftest fail-if-command-is-rejected
-  (handle (cqrs/command account-id create-command))
-  (is (= (handle (cqrs/command account-id (d/withdraw 20)))
+  (handle create-command nil)
+  (is (= (handle (d/withdraw 20) nil)
          (failure :insufficient-funds))))

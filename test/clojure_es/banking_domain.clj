@@ -5,6 +5,9 @@
 
 ; --- Commands ---
 
+(defn- can-withdraw? [account amount]
+  (>= (:balance account) amount))
+
 (defn create-account [owner initial-balance]
   (fn [account]
     (success [{:type :account-created}
@@ -14,9 +17,6 @@
 (defn deposit [amount]
   (fn [account]
     (success [{:type :deposit-performed :amount amount}])))
-
-(defn can-withdraw? [account amount]
-  (>= (:balance account) amount))
 
 (defn withdraw [amount]
   (fn [account]
@@ -35,7 +35,7 @@
   (assoc account :owner (:owner event)))
 
 (defmethod handle :deposit-performed [account event]
-  (update account :balance (fn [balance] (+ balance (:amount event)))))
+  (update account :balance (partial + (:amount event))))
 
 (defmethod handle :withdrawal-performed [account event]
   (update account :balance (fn [balance] (- balance (:amount event)))))
