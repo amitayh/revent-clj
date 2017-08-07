@@ -28,10 +28,10 @@
 (deftest load-snapshot-from-events
   (persist-events
     aggregate-id
-    [{:type :account-created}
-     {:type :owner-changed :owner "John Doe"}
-     {:type :deposit-performed :amount 30}
-     {:type :withdrawal-performed :amount 10}])
+    [(d/->AccountCreated)
+     (d/->OwnerChanged "John Doe")
+     (d/->DepositPerformed 30)
+     (d/->WithdrawalPerformed 10)])
 
   (testing "succeed when expected version is not specified"
     (is (= (success {:aggregate {:owner "John Doe" :balance 20}
