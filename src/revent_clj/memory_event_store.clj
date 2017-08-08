@@ -1,14 +1,12 @@
 (ns revent-clj.memory-event-store
-  (:require [revent-clj.either :refer :all]
+  (:require [revent-clj.core :refer :all]
+            [revent-clj.either :refer :all]
             [revent-clj.version :as version]))
 
 (defn- to-event-stream [payloads last-version timestamp]
   (let [next-version (inc last-version)
         next-versions (iterate inc next-version)
-        combiner (fn [payload version]
-                   {:version   version
-                    :payload   payload
-                    :timestamp timestamp})]
+        combiner (fn [payload version] (->Event version payload timestamp))]
     (mapv combiner payloads next-versions)))
 
 (defn- last-version-for [store stream-id expected-version]

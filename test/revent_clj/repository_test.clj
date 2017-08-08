@@ -1,9 +1,10 @@
 (ns revent-clj.repository-test
   (:require [clojure.test :refer :all]
+            [revent-clj.core :refer :all]
+            [revent-clj.either :refer :all]
+            [revent-clj.banking-domain :refer :all]
             [revent-clj.repository :as r]
-            [revent-clj.memory-event-store :as s]
-            [revent-clj.banking-domain :as d]
-            [revent-clj.either :refer :all]))
+            [revent-clj.memory-event-store :as s]))
 
 (def aggregate-id 1)
 
@@ -16,33 +17,29 @@
         read-events (partial s/read-events store)
         now (constantly :now)]
     (binding [persist-events (partial s/persist-events store now)
-              load-snapshot (partial r/load-snapshot read-events d/reducer)]
+              load-snapshot (partial r/load-snapshot read-events reducer)]
       (test))))
 
 (use-fixtures :each setup-repository)
 
 (deftest load-empty-snapshot
-  (is (= (success {:aggregate {} :version 0})
+  (is (= (success (->Snapshot {} 0 nil))
          (load-snapshot aggregate-id))))
 
 (deftest load-snapshot-from-events
   (persist-events
     aggregate-id
-    [(d/->AccountCreated)
-     (d/->OwnerChanged "John Doe")
-     (d/->DepositPerformed 30)
-     (d/->WithdrawalPerformed 10)])
+    [(->AccountCreated)
+     (->OwnerChanged "John Doe")
+     (->DepositPerformed 30)
+     (->WithdrawalPerformed 10)])
 
   (testing "succeed when expected version is not specified"
-    (is (= (success {:aggregate {:owner "John Doe" :balance 20}
-                     :timestamp :now
-                     :version 4})
+    (is (= (success (->Snapshot {:owner "John Doe" :balance 20} 4 :now))
            (load-snapshot aggregate-id))))
 
   (testing "succeed when expected version matches"
-    (is (= (success {:aggregate {:owner "John Doe" :balance 20}
-                     :timestamp :now
-                     :version 4})
+    (is (= (success (->Snapshot {:owner "John Doe" :balance 20} 4 :now))
            (load-snapshot aggregate-id 4))))
 
   (testing "fail when expected version doesn't match"

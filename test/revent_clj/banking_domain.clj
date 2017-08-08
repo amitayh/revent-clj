@@ -1,5 +1,6 @@
 (ns revent-clj.banking-domain
-  (:require [revent-clj.either :refer :all]))
+  (:require [revent-clj.core :refer :all]
+            [revent-clj.either :refer :all]))
 
 ; --- Example domain for tests ---
 
@@ -54,4 +55,4 @@
 
 ; -- Reducer ---
 
-(def reducer {:init {} :handle handle})
+(def reducer (->Reducer {} handle))

@@ -36,7 +36,7 @@
                        (cqrs/handle
                          load-snapshot
                          persist-events
-                         (cqrs/command account-id command expected-version)))]
+                         (cqrs/->Command account-id command expected-version)))]
       (test))))
 
 (use-fixtures :each setup-handler)

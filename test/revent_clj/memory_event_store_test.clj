@@ -1,5 +1,6 @@
 (ns revent-clj.memory-event-store-test
   (:require [clojure.test :refer :all]
+            [revent-clj.core :refer :all]
             [revent-clj.either :refer :all]
             [revent-clj.memory-event-store :as s]))
 
@@ -25,13 +26,13 @@
 (use-fixtures :each setup-store)
 
 (deftest persist-event-successfully
-  (is (= (success [{:version 1 :payload :some-event :timestamp :now}])
+  (is (= (success [(->Event 1 :some-event :now)])
          (persist-events stream-id [:some-event]))))
 
 (deftest persist-multiple-events
-  (is (= (success [{:version 1 :payload :event1 :timestamp :now}
-                   {:version 2 :payload :event2 :timestamp :now}
-                   {:version 3 :payload :event3 :timestamp :now}])
+  (is (= (success [(->Event 1 :event1 :now)
+                   (->Event 2 :event2 :now)
+                   (->Event 3 :event3 :now)])
          (persist-events stream-id [:event1 :event2 :event3]))))
 
 (deftest read-empty-event-stream
@@ -41,7 +42,7 @@
   (persist-events stream-id [:some-event])
 
   (testing "for same stream ID"
-    (is (= [{:version 1 :payload :some-event :timestamp :now}]
+    (is (= [(->Event 1 :some-event :now)]
            (read-events stream-id))))
 
   (testing "for different stream ID"
@@ -67,5 +68,5 @@
 (deftest persist-events-atomically
   (is (successful (persist-events stream-id [:event1])))
   (is (failed (persist-events stream-id [:event2 :event3] 0)))
-  (is (= [{:version 1 :payload :event1 :timestamp :now}]
+  (is (= [(->Event 1 :event1 :now)]
          (read-events stream-id))))

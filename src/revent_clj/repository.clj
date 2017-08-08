@@ -1,13 +1,16 @@
 (ns revent-clj.repository
-  (:require [revent-clj.either :refer :all]
+  (:require [revent-clj.core :refer :all]
+            [revent-clj.either :refer :all]
             [revent-clj.version :as version]))
 
 (defn- create-snapshot-reducer [reducer]
-  {:init   {:aggregate (:init reducer) :version 0}
-   :handle (fn [snapshot event]
-             {:aggregate ((:handle reducer) (:aggregate snapshot) (:payload event))
-              :version   (:version event)
-              :timestamp (:timestamp event)})})
+  (->Reducer
+    (->Snapshot (:init reducer) 0 nil)
+    (fn [snapshot event]
+      (->Snapshot
+        ((:handle reducer) (:aggregate snapshot) (:payload event))
+        (:version event)
+        (:timestamp event)))))
 
 (defn- reduce-events [reducer events]
   (reduce (:handle reducer) (:init reducer) events))
