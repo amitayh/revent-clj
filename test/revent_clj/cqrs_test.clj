@@ -17,14 +17,11 @@
 (def ^:dynamic load-snapshot)
 
 (defn load-account []
-  (-> account-id
-      (load-snapshot)
-      (first)
-      (:aggregate)))
+  (-> account-id load-snapshot first :aggregate))
 
 (defn last-version [[events error]]
   (if (nil? error)
-    (-> events (last) (:version))
+    (-> events last :version)
     nil))
 
 (defn setup-handler [test]

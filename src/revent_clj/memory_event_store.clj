@@ -1,5 +1,5 @@
 (ns revent-clj.memory-event-store
-  (:require [revent-clj.core :refer :all]
+  (:require [revent-clj.event :refer :all]
             [revent-clj.either :refer :all]
             [revent-clj.version :as version]))
 
@@ -11,7 +11,7 @@
 
 (defn- last-version-for [store stream-id expected-version]
   (let [stream (get store stream-id [])
-        last-version (or (-> stream (last) (:version)) 0)]
+        last-version (or (-> stream last :version) 0)]
     (if (version/validate expected-version last-version)
       (success last-version)
       (failure :concurrent-modification))))

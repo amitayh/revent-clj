@@ -1,6 +1,6 @@
 (ns revent-clj.repository-test
   (:require [clojure.test :refer :all]
-            [revent-clj.core :refer :all]
+            [revent-clj.snapshot :refer :all]
             [revent-clj.either :refer :all]
             [revent-clj.banking-domain :refer :all]
             [revent-clj.repository :as r]

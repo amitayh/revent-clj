@@ -1,6 +1,6 @@
 (ns revent-clj.memory-event-store-test
   (:require [clojure.test :refer :all]
-            [revent-clj.core :refer :all]
+            [revent-clj.event :refer :all]
             [revent-clj.either :refer :all]
             [revent-clj.memory-event-store :as s]))
 
