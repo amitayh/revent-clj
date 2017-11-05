@@ -4,4 +4,5 @@
   :license {:name "MIT License"
             :url "https://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.9.0-alpha17"]
-                 [org.clojure/core.match "0.3.0-alpha5"]])
+                 [org.clojure/core.match "0.3.0-alpha5"]]
+  :plugins [[lein-cloverage "1.0.7-SNAPSHOT"]])

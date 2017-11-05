@@ -1,4 +1,4 @@
-# Revent [![Build Status](https://travis-ci.org/amitayh/revent-clj.svg?branch=master)](https://travis-ci.org/amitayh/revent-clj)
+# Revent [![Build Status](https://travis-ci.org/amitayh/revent-clj.svg?branch=master)](https://travis-ci.org/amitayh/revent-clj) [![codecov](https://codecov.io/gh/amitayh/revent-clj/branch/master/graph/badge.svg)](https://codecov.io/gh/amitayh/revent-clj)
 
 Revent is a lightweight event-sourcing library for Clojure, designed to stay out of your way
 
