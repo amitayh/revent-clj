@@ -36,17 +36,26 @@
          (persist-events stream-id [:event1 :event2 :event3]))))
 
 (deftest read-empty-event-stream
-  (is (empty? (read-events stream-id))))
+  (is (empty? (read-events stream-id 1 10))))
 
 (deftest read-persisted-event
   (persist-events stream-id [:some-event])
 
   (testing "for same stream ID"
     (is (= [(->Event 1 :some-event :now)]
-           (read-events stream-id))))
+           (read-events stream-id 1 10))))
 
   (testing "for different stream ID"
-    (is (empty? (read-events other-stream-id)))))
+    (is (empty? (read-events other-stream-id 1 10)))))
+
+(deftest read-paged-results
+  (persist-events stream-id [:event1 :event2 :event3 :event4])
+  (is (= [(->Event 1 :event1 :now)
+          (->Event 2 :event2 :now)
+          (->Event 3 :event3 :now)]
+         (read-events stream-id 1 3)))
+  (is (= [(->Event 4 :event4 :now)]
+         (read-events stream-id 4 3))))
 
 (deftest persist-first-event-with-expected-version
   (is (= (failure :concurrent-modification)
@@ -69,4 +78,4 @@
   (is (successful (persist-events stream-id [:event1])))
   (is (failed (persist-events stream-id [:event2 :event3] 0)))
   (is (= [(->Event 1 :event1 :now)]
-         (read-events stream-id))))
+         (read-events stream-id 1 10))))

@@ -28,7 +28,7 @@
   (let [store (s/empty-store)
         read-events (partial s/read-events store)
         persist-events (partial s/persist-events store s/now)]
-    (binding [load-snapshot (partial r/load-snapshot read-events d/reducer)
+    (binding [load-snapshot (partial r/load-snapshot read-events d/reducer 100)
               handle (fn [command expected-version]
                        (cqrs/handle
                          load-snapshot

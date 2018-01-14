@@ -1,4 +1,5 @@
 (ns revent-clj.memory-event-store
+  (:import (java.time Instant))
   (:require [revent-clj.event :refer :all]
             [revent-clj.either :refer :all]
             [revent-clj.version :as version]))
@@ -21,7 +22,7 @@
 
 ; --- Public ---
 
-(defn now [] (java.time.Instant/now))
+(defn now [] (Instant/now))
 
 (defn empty-store [] (atom {}))
 
@@ -42,5 +43,8 @@
              (success new-events)
              (failure :concurrent-modification))))))))
 
-(defn read-events [store stream-id]
-  (get @store stream-id []))
+(defn read-events [store stream-id from-version max-count]
+  (->> (get @store stream-id [])
+       (drop (dec from-version))
+       (take max-count)))
+

@@ -1,13 +1,23 @@
 (ns revent-clj.repository
-  (:require [revent-clj.reducer :as reducer]
+  (:require [revent-clj.either :refer :all]
+            [revent-clj.reducer :as reducer]
             [revent-clj.snapshot :as snapshot]))
 
-(defn load-snapshot
-  ([read-events reducer aggregate-id]
-   (load-snapshot read-events reducer aggregate-id nil))
+(defn- no-more-events? [events page-size]
+  (< (count events) page-size))
 
-  ([read-events reducer aggregate-id expected-version]
+(defn load-snapshot
+  ([read-events reducer page-size aggregate-id expected-version]
+   (let [snapshot (load-snapshot read-events reducer page-size aggregate-id)]
+     (bind snapshot #(snapshot/validate % expected-version))))
+
+  ([read-events reducer page-size aggregate-id]
    (let [snapshot-reducer (snapshot/create-reducer reducer)
-         events (read-events aggregate-id)
-         snapshot (reducer/reduce-events snapshot-reducer events)]
-     (snapshot/validate snapshot expected-version))))
+         {init-snapshot :init handle :handle} snapshot-reducer]
+     (loop [snapshot init-snapshot]
+       (let [next-version (inc (:version snapshot))
+             events (read-events aggregate-id next-version page-size)
+             updated-snapshot (reduce handle snapshot events)]
+         (if (no-more-events? events page-size)
+           (success updated-snapshot)
+           (recur updated-snapshot)))))))

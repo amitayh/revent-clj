@@ -17,7 +17,7 @@
         read-events (partial s/read-events store)
         now (constantly :now)]
     (binding [persist-events (partial s/persist-events store now)
-              load-snapshot (partial r/load-snapshot read-events reducer)]
+              load-snapshot (partial r/load-snapshot read-events reducer 2)]
       (test))))
 
 (use-fixtures :each setup-repository)
