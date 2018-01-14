@@ -1,8 +1,7 @@
 (ns org.amitayh.revent-clj.memory-event-store-test
   (:require [clojure.test :refer :all]
-            [org.amitayh.revent-clj.event :refer :all]
             [org.amitayh.revent-clj.either :refer :all]
-            [org.amitayh.revent-clj.memory-event-store :as s]))
+            [org.amitayh.revent-clj.memory-event-store :as s :refer [->Event]]))
 
 (def stream-id 1)
 
@@ -26,13 +25,13 @@
 (use-fixtures :each setup-store)
 
 (deftest persist-event-successfully
-  (is (= (success [(->Event 1 :some-event :now)])
+  (is (= (success [(->Event stream-id 1 :some-event :now)])
          (persist-events stream-id [:some-event]))))
 
 (deftest persist-multiple-events
-  (is (= (success [(->Event 1 :event1 :now)
-                   (->Event 2 :event2 :now)
-                   (->Event 3 :event3 :now)])
+  (is (= (success [(->Event stream-id 1 :event1 :now)
+                   (->Event stream-id 2 :event2 :now)
+                   (->Event stream-id 3 :event3 :now)])
          (persist-events stream-id [:event1 :event2 :event3]))))
 
 (deftest read-empty-event-stream
@@ -42,7 +41,7 @@
   (persist-events stream-id [:some-event])
 
   (testing "for same stream ID"
-    (is (= [(->Event 1 :some-event :now)]
+    (is (= [(->Event stream-id 1 :some-event :now)]
            (read-events stream-id 1 10))))
 
   (testing "for different stream ID"
@@ -50,11 +49,11 @@
 
 (deftest read-paged-results
   (persist-events stream-id [:event1 :event2 :event3 :event4])
-  (is (= [(->Event 1 :event1 :now)
-          (->Event 2 :event2 :now)
-          (->Event 3 :event3 :now)]
+  (is (= [(->Event stream-id 1 :event1 :now)
+          (->Event stream-id 2 :event2 :now)
+          (->Event stream-id 3 :event3 :now)]
          (read-events stream-id 1 3)))
-  (is (= [(->Event 4 :event4 :now)]
+  (is (= [(->Event stream-id 4 :event4 :now)]
          (read-events stream-id 4 3))))
 
 (deftest persist-first-event-with-expected-version
@@ -77,5 +76,5 @@
 (deftest persist-events-atomically
   (is (successful (persist-events stream-id [:event1])))
   (is (failed (persist-events stream-id [:event2 :event3] 0)))
-  (is (= [(->Event 1 :event1 :now)]
+  (is (= [(->Event stream-id 1 :event1 :now)]
          (read-events stream-id 1 10))))
