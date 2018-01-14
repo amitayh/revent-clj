@@ -1,10 +1,10 @@
-(ns revent-clj.cqrs-test
+(ns org.amitayh.revent-clj.cqrs-test
   (:require [clojure.test :refer :all]
-            [revent-clj.either :refer :all]
-            [revent-clj.cqrs :as cqrs]
-            [revent-clj.memory-event-store :as s]
-            [revent-clj.banking-domain :as d]
-            [revent-clj.repository :as r]))
+            [org.amitayh.revent-clj.either :refer :all]
+            [org.amitayh.revent-clj.cqrs :as cqrs]
+            [org.amitayh.revent-clj.memory-event-store :as s]
+            [org.amitayh.revent-clj.banking-domain :as d]
+            [org.amitayh.revent-clj.repository :as r]))
 
 (def account-id 1)
 

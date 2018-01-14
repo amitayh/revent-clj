@@ -1,4 +1,4 @@
-(ns revent-clj.either
+(ns org.amitayh.revent-clj.either
   (:require [clojure.core.match :refer [match]]))
 
 (defn success [value] [value nil])

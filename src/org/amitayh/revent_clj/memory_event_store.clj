@@ -1,8 +1,8 @@
-(ns revent-clj.memory-event-store
+(ns org.amitayh.revent-clj.memory-event-store
   (:import (java.time Instant))
-  (:require [revent-clj.event :refer :all]
-            [revent-clj.either :refer :all]
-            [revent-clj.version :as version]))
+  (:require [org.amitayh.revent-clj.event :refer :all]
+            [org.amitayh.revent-clj.either :refer :all]
+            [org.amitayh.revent-clj.version :as version]))
 
 (defn- to-event-stream [payloads last-version timestamp]
   (let [next-version (inc last-version)

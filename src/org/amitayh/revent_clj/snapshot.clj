@@ -1,7 +1,7 @@
-(ns revent-clj.snapshot
-  (:require [revent-clj.reducer :refer :all]
-            [revent-clj.either :refer :all]
-            [revent-clj.version :as version]))
+(ns org.amitayh.revent-clj.snapshot
+  (:require [org.amitayh.revent-clj.reducer :refer :all]
+            [org.amitayh.revent-clj.either :refer :all]
+            [org.amitayh.revent-clj.version :as version]))
 
 (defrecord Snapshot [aggregate version timestamp])
 

@@ -1,6 +1,6 @@
-(ns revent-clj.either-test
+(ns org.amitayh.revent-clj.either-test
   (:require [clojure.test :refer :all]
-            [revent-clj.either :refer :all]))
+            [org.amitayh.revent-clj.either :refer :all]))
 
 (def failed (failure :some-error))
 

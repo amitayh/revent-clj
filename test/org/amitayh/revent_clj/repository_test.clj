@@ -1,10 +1,10 @@
-(ns revent-clj.repository-test
+(ns org.amitayh.revent-clj.repository-test
   (:require [clojure.test :refer :all]
-            [revent-clj.snapshot :refer :all]
-            [revent-clj.either :refer :all]
-            [revent-clj.banking-domain :refer :all]
-            [revent-clj.repository :as r]
-            [revent-clj.memory-event-store :as s]))
+            [org.amitayh.revent-clj.snapshot :refer :all]
+            [org.amitayh.revent-clj.either :refer :all]
+            [org.amitayh.revent-clj.banking-domain :refer :all]
+            [org.amitayh.revent-clj.repository :as r]
+            [org.amitayh.revent-clj.memory-event-store :as s]))
 
 (def aggregate-id 1)
 

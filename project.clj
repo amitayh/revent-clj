@@ -1,4 +1,4 @@
-(defproject revent-clj "0.1.0-SNAPSHOT"
+(defproject org.amitayh/revent-clj "0.1.0-SNAPSHOT"
   :description "Tiny event sourcing library for Clojure"
   :url "https://github.com/amitayh/revent-clj"
   :license {:name "MIT License"

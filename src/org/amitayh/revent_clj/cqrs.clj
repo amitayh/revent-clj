@@ -1,5 +1,5 @@
-(ns revent-clj.cqrs
-  (:require [revent-clj.either :refer :all]))
+(ns org.amitayh.revent-clj.cqrs
+  (:require [org.amitayh.revent-clj.either :refer :all]))
 
 (defrecord Command [aggregate-id to-events expected-version])
 
