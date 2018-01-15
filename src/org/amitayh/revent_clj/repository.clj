@@ -15,7 +15,7 @@
    (let [snapshot-reducer (snapshot/create-reducer reducer)
          {init-snapshot :init handle :handle} snapshot-reducer]
      (loop [snapshot init-snapshot]
-       (let [next-version (inc (:version snapshot))
+       (let [next-version (snapshot/next-version snapshot)
              events (read-events aggregate-id next-version page-size)
              updated-snapshot (reduce handle snapshot events)]
          (if (no-more-events? events page-size)

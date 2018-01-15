@@ -23,7 +23,7 @@
 (use-fixtures :each setup-repository)
 
 (deftest load-empty-snapshot
-  (is (= (success (->Snapshot {} 0 nil))
+  (is (= (success (->Snapshot {} nil nil))
          (load-snapshot aggregate-id))))
 
 (deftest load-snapshot-from-events
