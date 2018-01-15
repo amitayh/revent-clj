@@ -1,6 +1,6 @@
 (ns org.amitayh.revent-clj.cqrs-test
   (:require [clojure.test :refer :all]
-            [org.amitayh.revent-clj.either :refer :all]
+            [org.amitayh.either :refer :all]
             [org.amitayh.revent-clj.cqrs :as cqrs]
             [org.amitayh.revent-clj.memory-event-store :as s]
             [org.amitayh.revent-clj.banking-domain :as d]

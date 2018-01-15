@@ -1,6 +1,6 @@
 (ns org.amitayh.revent-clj.banking-domain
   (:require [org.amitayh.revent-clj.reducer :refer [->Reducer]]
-            [org.amitayh.revent-clj.either :refer :all]))
+            [org.amitayh.either :refer :all]))
 
 ; --- Example domain for tests ---
 

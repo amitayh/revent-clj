@@ -1,5 +1,5 @@
 (ns org.amitayh.revent-clj.repository
-  (:require [org.amitayh.revent-clj.either :refer :all]
+  (:require [org.amitayh.either :refer :all]
             [org.amitayh.revent-clj.reducer :as reducer]
             [org.amitayh.revent-clj.snapshot :as snapshot]))
 

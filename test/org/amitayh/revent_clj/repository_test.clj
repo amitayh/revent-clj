@@ -1,7 +1,7 @@
 (ns org.amitayh.revent-clj.repository-test
   (:require [clojure.test :refer :all]
+            [org.amitayh.either :refer :all]
             [org.amitayh.revent-clj.snapshot :refer :all]
-            [org.amitayh.revent-clj.either :refer :all]
             [org.amitayh.revent-clj.banking-domain :refer :all]
             [org.amitayh.revent-clj.repository :as r]
             [org.amitayh.revent-clj.memory-event-store :as s]))

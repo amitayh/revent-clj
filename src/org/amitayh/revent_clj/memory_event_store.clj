@@ -1,6 +1,6 @@
 (ns org.amitayh.revent-clj.memory-event-store
   (:import (java.time Instant))
-  (:require [org.amitayh.revent-clj.either :refer :all]
+  (:require [org.amitayh.either :refer :all]
             [org.amitayh.revent-clj.version :as version]))
 
 (defrecord Event [stream-id version payload timestamp])
